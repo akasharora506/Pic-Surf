@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './index.css';
 export default function SearchBar({ setSearchImage }) {
 
     const onSearchQuerySubmit = (e) => {
@@ -9,10 +9,8 @@ export default function SearchBar({ setSearchImage }) {
     }
 
     return (
-        <div>
-            <form onSubmit={onSearchQuerySubmit}>
-                <input type="text" name="ImageSearch"></input>
-            </form>
-        </div>
+        <form onSubmit={onSearchQuerySubmit}>
+            <input className="search-bar" type="text" name="ImageSearch" placeholder="Search free high resolution photos"></input>
+        </form>
     )
 }
