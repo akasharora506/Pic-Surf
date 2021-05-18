@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import SearchBar from './components/SearchBar/SearchBar';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [searchImage, setSearchImage] = useState("");
+    const [images, setImages] = useState([]);
+
+    useEffect(() => {
+        const link = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${process.env.REACT_APP_API_KEY}&text=${searchImage}&media=photos&per_page=12&page=1&format=json&nojsoncallback=1`;
+        fetch(link)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setImages(result.photos);
+                },
+                (error) => {
+                    alert(error);
+                }
+            )
+    }, [searchImage])
+
+
+    return (
+        <div>
+            <SearchBar setSearchImage={setSearchImage} />
+            <ImageGallery images={images} />
+        </div>
+    )
 }
 
 export default App;
