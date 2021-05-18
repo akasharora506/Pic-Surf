@@ -6,12 +6,11 @@ import './index.css';
 function App() {
     const [searchImage, setSearchImage] = useState("");
     const [images, setImages] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const loader = useRef(null);
 
     const handleObserver = (entities) => {
         const target = entities[0];
-        console.log(entities);
         if (target.isIntersecting) {
             setPage((page) => page + 1)
         }
@@ -22,7 +21,7 @@ function App() {
         var options = {
             root: null,
             rootMargin: "20px",
-            threshold: 1.0
+            threshold: 0
         };
 
         const observer = new IntersectionObserver(handleObserver, options);
@@ -55,7 +54,6 @@ function App() {
             .then(
                 (result) => {
                     setImages(result.photos.photo);
-                    setPage(1);
                 },
                 (error) => {
                     alert(error);
