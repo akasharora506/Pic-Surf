@@ -46,7 +46,22 @@ function App() {
                     alert(error);
                 }
             )
-    }, [searchImage, page, setImages]);
+    }, [page, setImages]);
+
+    useEffect(() => {
+        const link = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${process.env.REACT_APP_API_KEY}&text=${searchImage}&media=photos&per_page=12&page=${page}&format=json&nojsoncallback=1`;
+        fetch(link)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setImages(result.photos.photo);
+                    setPage(1);
+                },
+                (error) => {
+                    alert(error);
+                }
+            )
+    }, [searchImage, setImages]);
 
     return (
         <div>
